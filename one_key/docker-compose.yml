@@ -1,0 +1,48 @@
+version: "2"
+services:
+  blackmamba:
+    build: ./blackmamba
+    image: essence/crane_blackmamba:1.0
+    ports:
+      - "81:80"
+    volumes:
+      - /etc/localtime:/etc/localtime
+    links:
+      - crane
+    restart: always
+  crane_registry:
+    build: ./registry
+    image: essence/crane_registry:1.0
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    environment:
+      - CRANE_IP
+    volumes:
+      - ./registry_storage:/storage
+      - /etc/localtime:/etc/localtime
+    restart: always
+  crane:
+    build: ./crane
+    image: essence/crane_crane:1.0
+    env_file:
+      - ./env
+    links:
+      - crane_registry
+      - crane_db
+    environment:
+      - CRANE_SWARM_MANAGER_IP=10.38.210.66
+    volumes:
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "5013:5013"
+    restart: always
+  crane_db:
+    build: ./mysql
+    image: essence/crane_mysql:1.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=111111
+    volumes:
+      - ./mysql_storage:/var/lib/mysql
+      - /etc/localtime:/etc/localtime
+    restart: always
