@@ -21,6 +21,8 @@ INIT_ERROR=$(docker swarm init --advertise-addr=$CRANE_IP 2>&1 > /dev/null) || {
 }
 echo "Swarm cluster have been running!"
 
+echo $CRANE_SWARM_MANAGER_IP
+
 docker-compose -p crane up -d
 
 # feedback the activities
