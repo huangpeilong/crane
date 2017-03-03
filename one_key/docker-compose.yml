@@ -2,6 +2,8 @@ version: "2"
 services:
   blackmamba:
     build: ./blackmamba
+#      context: ../frontend
+#      dockerfile: ./Dockerfile
     image: essence/crane_blackmamba:1.0
     ports:
       - "81:80"
@@ -31,7 +33,7 @@ services:
       - crane_registry
       - crane_db
     environment:
-      - CRANE_SWARM_MANAGER_IP=10.38.210.66
+      - CRANE_SWARM_MANAGER_IP
     volumes:
       - /etc/localtime:/etc/localtime
     ports:

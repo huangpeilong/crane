@@ -6,6 +6,9 @@ export CRANE_SWARM_MANAGER_IP=$CRANE_IP
 export TAG=${VERSION:-1.0}
 export REGISTRY_PREFIX=${REGISTRY_PREFIX:-demoregistry.dataman-inc.com/crane/}
 
+cp -r ../deploy ./crane/
+cp -r ../bin ./crane/
+
 # node env check
 echo "Checking the node status"
 ./node-init.sh || exit 1
